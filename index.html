@@ -16,10 +16,10 @@
       --bg: #0a0a0a;
       --surface: #0f0f0f;
       --accent: #F5C800;
-      --text: #e8e4dc;
-      --text-muted: rgba(232, 228, 220, 0.55);
-      --text-faint: rgba(232, 228, 220, 0.35);
-      --text-ghost: rgba(232, 228, 220, 0.4);
+      --text: #f0ece4;
+      --text-muted: rgba(240, 236, 228, 0.75);
+      --text-faint: rgba(240, 236, 228, 0.5);
+      --text-ghost: rgba(240, 236, 228, 0.6);
       --border: #F5C800;
       --border-faint: rgba(245, 200, 0, 0.15);
       --border-ghost: rgba(245, 200, 0, 0.1);
@@ -284,10 +284,10 @@
     }
 
     .section-label {
-      font-size: 10px;
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      color: var(--text-ghost);
+      color: var(--text-muted);
       margin-bottom: 1rem;
     }
 
@@ -313,11 +313,12 @@
     .stage:last-child { margin-bottom: 0; }
 
     .stage-label {
-      font-size: 10px;
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      color: var(--text-ghost);
+      color: var(--accent);
       margin-bottom: 1.5rem;
+      opacity: 0.8;
     }
 
     /* Service Tiles */
@@ -361,9 +362,10 @@
 
     .tile-name {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       letter-spacing: 0.05em;
       margin-bottom: 0.5rem;
+      color: var(--text);
     }
 
     .tile-price {
@@ -378,10 +380,10 @@
     }
 
     .price-label {
-      font-size: 10px;
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      color: var(--text-ghost);
+      color: var(--text-muted);
       margin-bottom: 0.5rem;
     }
 
@@ -408,8 +410,8 @@
     }
 
     .slider-labels span {
-      font-size: 10px;
-      color: var(--text-faint);
+      font-size: 11px;
+      color: var(--text-muted);
     }
 
     .slider-track {
@@ -444,16 +446,16 @@
     }
 
     .slider-stop {
-      font-size: 11px;
+      font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--text-faint);
+      color: var(--text-muted);
       padding: 0.5rem 1rem;
       border: 1px solid transparent;
       transition: color 0.2s, border-color 0.2s;
     }
 
-    .slider-stop:hover { color: var(--text-muted); }
+    .slider-stop:hover { color: var(--text); }
 
     .slider-stop.active {
       color: var(--accent);
