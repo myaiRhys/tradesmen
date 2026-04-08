@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pipes & Co — Premium Plumbing, Cape Town</title>
+  <meta name="description" content="Premium plumbing for Cape Town homes and businesses. Fixed pricing. No surprises. 24/7 emergency response.">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #0f0f0f;
+      --accent: #F5C800;
+      --text: #e8e4dc;
+      --text-muted: rgba(232, 228, 220, 0.55);
+      --text-faint: rgba(232, 228, 220, 0.35);
+      --text-ghost: rgba(232, 228, 220, 0.4);
+      --border: #F5C800;
+      --border-faint: rgba(245, 200, 0, 0.15);
+      --border-ghost: rgba(245, 200, 0, 0.1);
+      --whatsapp: #25D366;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    a, button, select, input, textarea { cursor: none; }
+    a { color: inherit; text-decoration: none; }
+    button { border: none; background: none; font-family: inherit; }
+    input, select, textarea { font-family: inherit; border-radius: 0; }
+
+    .bebas { font-family: 'Bebas Neue', sans-serif; }
+
+    /* Custom Cursor */
+    #cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.15s, height 0.15s;
+    }
+
+    #cursor.hover {
+      width: 20px;
+      height: 20px;
+      mix-blend-mode: difference;
+    }
+
+    /* Scroll Progress */
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent);
+      z-index: 400;
+      transform-origin: left;
+      width: 0%;
+    }
+
+    /* Clip-path reveals */
+    .reveal-clip {
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-clip.visible { clip-path: inset(0% 0 0 0); }
+
+    .reveal-clip:nth-child(2) { transition-delay: 0.1s; }
+    .reveal-clip:nth-child(3) { transition-delay: 0.2s; }
+    .reveal-clip:nth-child(4) { transition-delay: 0.3s; }
+    .reveal-clip:nth-child(5) { transition-delay: 0.4s; }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: var(--bg);
+      border-bottom: 3px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 300;
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-emergency {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28vw;
+      color: rgba(245, 200, 0, 0.04);
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+      white-space: nowrap;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-ghost);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 0;
+    }
+
+    .hero-rule {
+      width: 80px;
+      height: 4px;
+      background: var(--accent);
+      margin: 2rem 0;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 1rem 2rem;
+      border: 3px solid var(--accent);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 1rem 2rem;
+      border: 3px solid var(--accent);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* Trust Strip */
+    .trust-strip {
+      background: var(--surface);
+      border-top: 3px solid var(--border-faint);
+      border-bottom: 3px solid var(--border-faint);
+      padding: 2.5rem 2rem;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .trust-item {
+      text-align: center;
+      padding: 0 1.5rem;
+      border-right: 1px solid var(--border-faint);
+    }
+
+    .trust-item:last-child { border-right: none; }
+
+    .trust-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .trust-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      margin-top: 0.5rem;
+    }
+
+    .trust-footnote {
+      text-align: center;
+      font-size: 9px;
+      color: var(--text-faint);
+      margin-top: 1.5rem;
+    }
+
+    /* Sections */
+    section {
+      padding: 6rem 4rem;
+    }
+
+    .section-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-ghost);
+      margin-bottom: 1rem;
+    }
+
+    section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--text);
+      margin-bottom: 3rem;
+    }
+
+    /* Calculator Section */
+    #calculator { background: var(--bg); }
+
+    .calculator-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      border: 3px solid var(--accent);
+      padding: 3rem;
+      background: var(--surface);
+    }
+
+    .stage { margin-bottom: 3rem; }
+    .stage:last-child { margin-bottom: 0; }
+
+    .stage-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-ghost);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Service Tiles */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .tile {
+      border: 3px solid var(--accent);
+      background: transparent;
+      padding: 1.5rem;
+      text-align: center;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .tile:hover { background: rgba(245, 200, 0, 0.05); }
+
+    .tile.selected {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .tile.selected .tile-icon svg { stroke: var(--bg); }
+    .tile.selected .tile-price { color: var(--bg); }
+
+    .tile-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1rem;
+    }
+
+    .tile-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: var(--accent);
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .tile-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .tile-price {
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    /* Price Display */
+    .price-display {
+      text-align: center;
+      padding: 2.5rem 0;
+    }
+
+    .price-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-ghost);
+      margin-bottom: 0.5rem;
+    }
+
+    .price-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 8rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .price-note {
+      font-size: 9px;
+      color: var(--text-faint);
+      margin-top: 0.5rem;
+    }
+
+    /* Complexity Slider */
+    .slider-container { padding: 1rem 0; }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .slider-labels span {
+      font-size: 10px;
+      color: var(--text-faint);
+    }
+
+    .slider-track {
+      position: relative;
+      height: 4px;
+      background: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .slider-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.2s;
+    }
+
+    .slider-thumb {
+      position: absolute;
+      top: 50%;
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      transform: translate(-50%, -50%);
+      transition: left 0.2s;
+    }
+
+    .slider-stops {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .slider-stop {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-faint);
+      padding: 0.5rem 1rem;
+      border: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .slider-stop:hover { color: var(--text-muted); }
+
+    .slider-stop.active {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Area Pills */
+    .area-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .area-pill {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.75rem 1.25rem;
+      border: 1px solid rgba(245, 200, 0, 0.3);
+      color: var(--text-muted);
+      background: transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .area-pill:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .area-pill.selected {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    /* WhatsApp Button */
+    .whatsapp-btn {
+      display: block;
+      width: 100%;
+      background: var(--whatsapp);
+      color: var(--bg);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 1.25rem 2rem;
+      text-align: center;
+      margin-top: 2rem;
+      border: 3px solid var(--whatsapp);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .whatsapp-btn:hover {
+      background: transparent;
+      color: var(--whatsapp);
+    }
+
+    .whatsapp-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .calculator-disclaimer {
+      font-size: 9px;
+      color: var(--text-faint);
+      text-align: center;
+      margin-top: 1.5rem;
+      line-height: 1.8;
+    }
+
+    /* Services Section */
+    #services {
+      background: var(--surface);
+      border-top: 3px solid var(--border-ghost);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 1000px;
+    }
+
+    .service-block {
+      padding: 2rem;
+      border-bottom: 1px solid var(--border-faint);
+      border-right: 1px solid var(--border-faint);
+    }
+
+    .service-block:nth-child(2n) { border-right: none; }
+    .service-block:nth-last-child(-n+2) { border-bottom: none; }
+
+    .service-block h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .service-block p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .service-meta {
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    /* About Section */
+    #about { padding: 6rem 4rem; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 55fr 45fr;
+      gap: 4rem;
+      max-width: 1100px;
+    }
+
+    .about-text h2 {
+      margin-bottom: 2rem;
+    }
+
+    .about-text p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-main {
+      border: 3px solid var(--accent);
+      padding: 2.5rem;
+      background: var(--surface);
+    }
+
+    .testimonial-main blockquote {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-main cite {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .testimonials-small {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .testimonial-small {
+      border-left: 3px solid var(--accent);
+      padding-left: 1.5rem;
+    }
+
+    .testimonial-small blockquote {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-small cite {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    /* Contact Section */
+    #contact {
+      background: var(--surface);
+      border-top: 3px solid var(--border-ghost);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      max-width: 1000px;
+    }
+
+    .contact-details { margin-top: 2rem; }
+
+    .contact-item {
+      margin-bottom: 2rem;
+    }
+
+    .contact-item-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-item-value {
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .contact-item-value a {
+      transition: color 0.2s;
+    }
+
+    .contact-item-value a:hover { color: var(--accent); }
+
+    /* Contact Form */
+    .contact-form { margin-top: 2rem; }
+
+    .form-group { margin-bottom: 1.5rem; }
+
+    .form-group label {
+      display: block;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border-faint);
+      padding: 0.75rem 0;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--text-faint);
+    }
+
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F5C800' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0 center;
+    }
+
+    .form-group select option {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .form-group textarea { resize: none; }
+
+    .form-submit {
+      width: 100%;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 1rem 2rem;
+      border: 3px solid var(--accent);
+      margin-top: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .form-submit:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 3px solid var(--border-faint);
+      padding: 2rem 4rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+    }
+
+    .footer-row:first-child {
+      border-bottom: 1px solid var(--border-ghost);
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      color: var(--accent);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 9px;
+      color: var(--text-faint);
+    }
+
+    .footer-credit {
+      font-size: 9px;
+      color: var(--accent);
+      transition: opacity 0.2s;
+    }
+
+    .footer-credit:hover { opacity: 0.7; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      section { padding: 4rem 2rem; }
+      .hero { padding: 0 2rem; }
+      nav { padding: 0 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .nav-emergency { display: none; }
+
+      .service-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-block { border-right: none; }
+      .service-block:nth-last-child(1) { border-bottom: none; }
+
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .testimonials-small { grid-template-columns: 1fr; }
+
+      .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+      .trust-item { border-right: none; border-bottom: 1px solid var(--border-faint); padding: 1rem; }
+      .trust-item:nth-child(2n) { border-left: 1px solid var(--border-faint); }
+      .trust-item:nth-last-child(-n+2) { border-bottom: none; }
+
+      .calculator-wrapper { padding: 2rem; }
+      .price-value { font-size: 5rem; }
+
+      footer { padding: 2rem; }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: clamp(3rem, 12vw, 5rem); }
+      .hero-bg-text { font-size: 40vw; }
+      .service-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .tile { padding: 1rem; }
+      .tile-icon { width: 36px; height: 36px; }
+      .tile-name { font-size: 0.9rem; }
+      .tile-price { font-size: 10px; }
+      .area-grid { gap: 0.5rem; }
+      .area-pill { padding: 0.6rem 1rem; font-size: 10px; }
+      .price-value { font-size: 4rem; }
+      .slider-stops { flex-direction: column; gap: 0.5rem; }
+      .slider-stop { text-align: center; }
+
+      #cursor { display: none; }
+      body { cursor: auto; }
+      a, button, select, input, textarea { cursor: pointer; }
+    }
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+  <div id="progress"></div>
+
+  <nav>
+    <a href="#" class="nav-logo">PIPES & CO</a>
+    <div class="nav-links">
+      <a href="#services">SERVICES</a>
+      <a href="#about">ABOUT</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+    <span class="nav-emergency">EMERGENCY: +27 82 123 4567</span>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg-text">PLUMBER</div>
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal-clip">CAPE TOWN · EST. 2008 · 24/7 EMERGENCY</p>
+      <h1 class="reveal-clip">WE FIX IT<br>RIGHT THE<br>FIRST TIME</h1>
+      <div class="hero-rule reveal-clip"></div>
+      <p class="hero-sub reveal-clip">Premium plumbing for Cape Town homes and businesses. Fixed pricing. No surprises. 24/7 emergency response.</p>
+      <div class="hero-ctas reveal-clip">
+        <a href="#calculator" class="btn-primary">GET A QUOTE</a>
+        <a href="tel:+27821234567" class="btn-secondary">CALL NOW</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-strip">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-number">847+</div>
+        <div class="trust-label">JOBS COMPLETED</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-number">4.9★</div>
+        <div class="trust-label">GOOGLE RATING</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-number">24/7</div>
+        <div class="trust-label">EMERGENCY RESPONSE</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-number">R0</div>
+        <div class="trust-label">CALL-OUT FEE*</div>
+      </div>
+    </div>
+    <p class="trust-footnote">*No call-out fee within 10km of Cape Town CBD</p>
+  </div>
+
+  <section id="calculator">
+    <p class="section-label reveal-clip">INSTANT QUOTE</p>
+    <h2 class="reveal-clip">WHAT DO YOU NEED FIXED?</h2>
+
+    <div class="calculator-wrapper">
+      <!-- Stage 1: Service Selection -->
+      <div class="stage">
+        <p class="stage-label">01 — SELECT YOUR SERVICE</p>
+        <div class="service-grid">
+          <button class="tile" data-service="Burst Pipe Emergency" data-price="850">
+            <div class="tile-icon">
+              <svg viewBox="0 0 48 48"><path d="M24 4v40M14 14l20 20M34 14L14 34M4 24h40"/></svg>
+            </div>
+            <div class="tile-name">BURST PIPE EMERGENCY</div>
+            <div class="tile-price">R850+</div>
+          </button>
+          <button class="tile" data-service="Drain Blockage" data-price="650">
+            <div class="tile-icon">
+              <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M24 12v24M16 20l8 8 8-8"/></svg>
+            </div>
+            <div class="tile-name">DRAIN BLOCKAGE</div>
+            <div class="tile-price">R650+</div>
+          </button>
+          <button class="tile" data-service="Geyser Replacement" data-price="2800">
+            <div class="tile-icon">
+              <svg viewBox="0 0 48 48"><rect x="12" y="8" width="24" height="32" rx="2"/><circle cx="24" cy="28" r="6"/><path d="M20 16h8"/></svg>
+            </div>
+            <div class="tile-name">GEYSER REPLACEMENT</div>
+            <div class="tile-price">R2800+</div>
+          </button>
+          <button class="tile" data-service="Leak Detection" data-price="750">
+            <div class="tile-icon">
+              <svg viewBox="0 0 48 48"><circle cx="20" cy="20" r="14"/><path d="M30 30l14 14"/><circle cx="20" cy="20" r="6"/></svg>
+            </div>
+            <div class="tile-name">LEAK DETECTION</div>
+            <div class="tile-price">R750+</div>
+          </button>
+          <button class="tile" data-service="New Installation" data-price="1800">
+            <div class="tile-icon">
+              <svg viewBox="0 0 48 48"><path d="M24 4l20 16H4zM8 20v24h32V20"/><rect x="18" y="28" width="12" height="16"/></svg>
+            </div>
+            <div class="tile-name">NEW INSTALLATION</div>
+            <div class="tile-price">R1800+</div>
+          </button>
+          <button class="tile" data-service="General Repair" data-price="550">
+            <div class="tile-icon">
+              <svg viewBox="0 0 48 48"><path d="M28 4L8 24l8 8 20-20zM12 36l-8 8M40 8l-4 4"/></svg>
+            </div>
+            <div class="tile-name">GENERAL REPAIR</div>
+            <div class="tile-price">R550+</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Stage 2: Complexity Slider -->
+      <div class="stage">
+        <p class="stage-label">02 — JOB COMPLEXITY</p>
+        <div class="slider-container">
+          <div class="slider-labels">
+            <span>Straightforward fix</span>
+            <span>Major job</span>
+          </div>
+          <div class="slider-track">
+            <div class="slider-fill" style="width: 0%"></div>
+            <div class="slider-thumb" style="left: 0%"></div>
+          </div>
+          <div class="slider-stops">
+            <button class="slider-stop active" data-multiplier="1">SIMPLE</button>
+            <button class="slider-stop" data-multiplier="1.4">STANDARD</button>
+            <button class="slider-stop" data-multiplier="2">COMPLEX</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price Display -->
+      <div class="price-display">
+        <p class="price-label">ESTIMATED COST (INCL. CALL-OUT)</p>
+        <div class="price-value">R<span id="price-number">0</span></div>
+        <p class="price-note">Final price confirmed on inspection</p>
+      </div>
+
+      <!-- Stage 3: Area Selection -->
+      <div class="stage">
+        <p class="stage-label">03 — YOUR AREA</p>
+        <div class="area-grid">
+          <button class="area-pill" data-area="City Bowl" data-fee="0">City Bowl</button>
+          <button class="area-pill" data-area="Atlantic Seaboard" data-fee="150">Atlantic Seaboard</button>
+          <button class="area-pill" data-area="Southern Suburbs" data-fee="100">Southern Suburbs</button>
+          <button class="area-pill" data-area="Northern Suburbs" data-fee="200">Northern Suburbs</button>
+          <button class="area-pill" data-area="West Coast" data-fee="250">West Coast</button>
+          <button class="area-pill" data-area="Winelands" data-fee="350">Winelands</button>
+        </div>
+      </div>
+
+      <!-- WhatsApp CTA -->
+      <a href="#" id="whatsapp-btn" class="whatsapp-btn disabled">SELECT A SERVICE ABOVE TO GET YOUR QUOTE</a>
+
+      <p class="calculator-disclaimer">Estimates are indicative only. Final price confirmed after inspection.<br>All work guaranteed for 12 months.</p>
+    </div>
+  </section>
+
+  <section id="services">
+    <p class="section-label reveal-clip">WHAT WE DO</p>
+    <h2 class="reveal-clip">OUR SERVICES</h2>
+
+    <div class="services-grid">
+      <div class="service-block reveal-clip">
+        <h3>BURST PIPE EMERGENCY</h3>
+        <p>We respond within 60 minutes, day or night. Water damage waits for no one.</p>
+        <span class="service-meta">R850+ · Response: 60 min</span>
+      </div>
+      <div class="service-block reveal-clip">
+        <h3>BLOCKED DRAINS</h3>
+        <p>High-pressure water jetting, camera inspection available. We find the problem and fix it.</p>
+        <span class="service-meta">R650+ · Same day</span>
+      </div>
+      <div class="service-block reveal-clip">
+        <h3>GEYSER REPLACEMENT</h3>
+        <p>Full installation including compliance certificate. All major brands supplied.</p>
+        <span class="service-meta">R2800+ · Next day</span>
+      </div>
+      <div class="service-block reveal-clip">
+        <h3>LEAK DETECTION</h3>
+        <p>Non-invasive electronic detection, no unnecessary damage. We find it before it finds you.</p>
+        <span class="service-meta">R750+ · Same day</span>
+      </div>
+      <div class="service-block reveal-clip">
+        <h3>NEW INSTALLATIONS</h3>
+        <p>Bathrooms, kitchens, laundry rooms, full fit-outs. From plans to pipes.</p>
+        <span class="service-meta">R1800+ · Scheduled</span>
+      </div>
+      <div class="service-block reveal-clip">
+        <h3>GENERAL REPAIRS</h3>
+        <p>Taps, toilets, valves, pipe connections, anything else. No job too small.</p>
+        <span class="service-meta">R550+ · Same day</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="reveal-clip">WE'RE NOT YOUR AVERAGE PLUMBER</h2>
+        <p class="reveal-clip">Pipes & Co has been fixing Cape Town's plumbing since 2008. We built this business on one principle: do it right the first time, or don't charge for it.</p>
+        <p class="reveal-clip">Every job comes with a 12-month guarantee. If it fails, we come back and fix it for free. No arguments, no call-out fee, no excuses.</p>
+        <p class="reveal-clip">We give you a fixed price before we start. Not an estimate that doubles when we open the wall. A price. That's the price.</p>
+      </div>
+      <div class="about-testimonials">
+        <div class="testimonial-main reveal-clip">
+          <blockquote>"Pieter came out within 45 minutes on a Sunday morning. Fixed the burst pipe, checked the rest of the system, gave me a full report. Charged exactly what he quoted. I've used him three times since."</blockquote>
+          <cite>— SANDRA VAN DER MERWE, CLAREMONT</cite>
+        </div>
+        <div class="testimonials-small">
+          <div class="testimonial-small reveal-clip">
+            <blockquote>"Called at 11pm for a geyser. Back in hot water by 7am. Worth every cent."</blockquote>
+            <cite>— JAMES OLIVIER, WOODSTOCK</cite>
+          </div>
+          <div class="testimonial-small reveal-clip">
+            <blockquote>"Finally a plumber who pitches up when they say they will."</blockquote>
+            <cite>— FATIMA DAVIDS, BELLVILLE</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2 class="reveal-clip">GET IN TOUCH</h2>
+        <div class="contact-details">
+          <div class="contact-item reveal-clip">
+            <p class="contact-item-label">PHONE</p>
+            <p class="contact-item-value"><a href="tel:+27821234567">+27 82 123 4567</a></p>
+          </div>
+          <div class="contact-item reveal-clip">
+            <p class="contact-item-label">WHATSAPP</p>
+            <p class="contact-item-value"><a href="https://wa.me/27821234567" target="_blank" rel="noopener">+27 82 123 4567</a></p>
+          </div>
+          <div class="contact-item reveal-clip">
+            <p class="contact-item-label">EMAIL</p>
+            <p class="contact-item-value"><a href="mailto:jobs@pipesandco.co.za">jobs@pipesandco.co.za</a></p>
+          </div>
+          <div class="contact-item reveal-clip">
+            <p class="contact-item-label">HOURS</p>
+            <p class="contact-item-value">Mon–Sat 07:00–18:00. Emergency: 24/7</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-wrap reveal-clip">
+        <form class="contact-form" action="mailto:jobs@pipesandco.co.za" method="post" enctype="text/plain">
+          <div class="form-group">
+            <label for="name">NAME</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">PHONE</label>
+            <input type="tel" id="phone" name="phone" placeholder="+27 ..." required>
+          </div>
+          <div class="form-group">
+            <label for="service">SERVICE NEEDED</label>
+            <select id="service" name="service" required>
+              <option value="" disabled selected>Select a service</option>
+              <option value="Burst Pipe Emergency">Burst Pipe Emergency</option>
+              <option value="Drain Blockage">Drain Blockage</option>
+              <option value="Geyser Replacement">Geyser Replacement</option>
+              <option value="Leak Detection">Leak Detection</option>
+              <option value="New Installation">New Installation</option>
+              <option value="General Repair">General Repair</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">MESSAGE</label>
+            <textarea id="message" name="message" rows="4" placeholder="Tell us about your problem..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">SEND MESSAGE</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-row">
+      <span class="footer-logo">PIPES & CO</span>
+      <div class="footer-links">
+        <a href="#services">SERVICES</a>
+        <a href="#about">ABOUT</a>
+        <a href="#contact">CONTACT</a>
+      </div>
+    </div>
+    <div class="footer-row">
+      <span class="footer-copy">© 2026 Pipes & Co. Cape Town.</span>
+      <a href="https://kinnearsystems.co.za" target="_blank" rel="noopener noreferrer" class="footer-credit">Site by Kinnear Systems</a>
+    </div>
+  </footer>
+
+  <script>
+    // State
+    const state = {
+      service: null,
+      servicePrice: 0,
+      multiplier: 1,
+      complexity: 'SIMPLE',
+      area: null,
+      areaFee: 0
+    };
+
+    let displayedPrice = 0;
+    let animationFrame = null;
+
+    // Elements
+    const cursor = document.getElementById('cursor');
+    const progress = document.getElementById('progress');
+    const priceNumber = document.getElementById('price-number');
+    const whatsappBtn = document.getElementById('whatsapp-btn');
+    const tiles = document.querySelectorAll('.tile');
+    const sliderStops = document.querySelectorAll('.slider-stop');
+    const sliderFill = document.querySelector('.slider-fill');
+    const sliderThumb = document.querySelector('.slider-thumb');
+    const areaPills = document.querySelectorAll('.area-pill');
+
+    // Custom Cursor
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    const hoverTargets = document.querySelectorAll('a, button, .tile, .area-pill, input, select, textarea');
+    hoverTargets.forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    // Scroll Progress
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      progress.style.width = scrollPercent + '%';
+    });
+
+    // Clip-path Reveals
+    const revealElements = document.querySelectorAll('.reveal-clip');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Calculator Functions
+    function calculateTotal() {
+      return Math.round(state.servicePrice * state.multiplier + state.areaFee);
+    }
+
+    function easeOutQuart(t) {
+      return 1 - Math.pow(1 - t, 4);
+    }
+
+    function animatePrice(from, to) {
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+
+      const duration = 400;
+      const startTime = performance.now();
+
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeOutQuart(progress);
+
+        displayedPrice = Math.round(from + (to - from) * eased);
+        priceNumber.textContent = displayedPrice.toLocaleString();
+
+        if (progress < 1) {
+          animationFrame = requestAnimationFrame(update);
+        }
+      }
+
+      animationFrame = requestAnimationFrame(update);
+    }
+
+    function updatePrice() {
+      const newTotal = calculateTotal();
+      animatePrice(displayedPrice, newTotal);
+      updateWhatsAppButton();
+    }
+
+    function updateWhatsAppButton() {
+      if (state.service) {
+        whatsappBtn.classList.remove('disabled');
+        whatsappBtn.textContent = 'GET THIS QUOTE ON WHATSAPP →';
+
+        const message = `Hi, I got a quote from your website.
+
+Service: ${state.service}
+Complexity: ${state.complexity}
+Area: ${state.area || 'Not selected'}
+Estimate: R${calculateTotal().toLocaleString()}
+
+Can we book a time?`;
+
+        whatsappBtn.href = `https://wa.me/27821234567?text=${encodeURIComponent(message)}`;
+        whatsappBtn.target = '_blank';
+        whatsappBtn.rel = 'noopener noreferrer';
+      } else {
+        whatsappBtn.classList.add('disabled');
+        whatsappBtn.textContent = 'SELECT A SERVICE ABOVE TO GET YOUR QUOTE';
+        whatsappBtn.href = '#';
+        whatsappBtn.removeAttribute('target');
+        whatsappBtn.removeAttribute('rel');
+      }
+    }
+
+    // Service Tiles
+    tiles.forEach(tile => {
+      tile.addEventListener('click', () => {
+        tiles.forEach(t => t.classList.remove('selected'));
+        tile.classList.add('selected');
+
+        state.service = tile.dataset.service;
+        state.servicePrice = parseInt(tile.dataset.price);
+
+        updatePrice();
+      });
+    });
+
+    // Complexity Slider
+    sliderStops.forEach((stop, index) => {
+      stop.addEventListener('click', () => {
+        sliderStops.forEach(s => s.classList.remove('active'));
+        stop.classList.add('active');
+
+        state.multiplier = parseFloat(stop.dataset.multiplier);
+        state.complexity = stop.textContent;
+
+        const percent = (index / (sliderStops.length - 1)) * 100;
+        sliderFill.style.width = percent + '%';
+        sliderThumb.style.left = percent + '%';
+
+        updatePrice();
+      });
+    });
+
+    // Area Pills
+    areaPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        areaPills.forEach(p => p.classList.remove('selected'));
+        pill.classList.add('selected');
+
+        state.area = pill.dataset.area;
+        state.areaFee = parseInt(pill.dataset.fee);
+
+        updatePrice();
+      });
+    });
+
+    // WhatsApp Button Click Prevention when disabled
+    whatsappBtn.addEventListener('click', (e) => {
+      if (whatsappBtn.classList.contains('disabled')) {
+        e.preventDefault();
+      }
+    });
+
+    // Initialize
+    updateWhatsAppButton();
+  </script>
+</body>
+</html>
