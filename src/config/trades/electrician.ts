@@ -133,6 +133,7 @@ export const electricianConfig: AppConfig = {
     enableNotes: true,
     enablePriorityLevels: true,
   },
+  calculators: [],
   termsAndConditions: `ELECTRICAL SERVICES TERMS & CONDITIONS
 
 1. COMPLIANCE

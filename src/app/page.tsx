@@ -1,21 +1,36 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useApp, useConfig } from '@/context';
 import { Card, StatusBadge, Button } from '@/components/ui';
 import { formatCurrency } from '@/lib/pricing';
+import { TradeSelector, getSelectedTrade } from '@/components/onboarding';
 
 export default function Dashboard() {
   const { jobs, clients, quotes, isLoaded } = useApp();
   const { config } = useConfig();
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [onboardingChecked, setOnboardingChecked] = useState(false);
 
-  if (!isLoaded) {
+  // Check for selected trade on mount
+  useEffect(() => {
+    const selectedTrade = getSelectedTrade();
+    setShowOnboarding(!selectedTrade);
+    setOnboardingChecked(true);
+  }, []);
+
+  if (!isLoaded || !onboardingChecked) {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="text-zinc-400">Loading...</div>
       </div>
     );
+  }
+
+  // Show onboarding if no trade selected
+  if (showOnboarding) {
+    return <TradeSelector onSelect={() => setShowOnboarding(false)} />;
   }
 
   // Calculate stats

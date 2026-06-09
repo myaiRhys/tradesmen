@@ -125,6 +125,7 @@ export const shadeportConfig: AppConfig = {
     enableNotes: true,
     enablePriorityLevels: true,
   },
+  calculators: [],
   termsAndConditions: `SHADEPORT & CARPORT INSTALLATION TERMS
 
 1. DEPOSIT & PAYMENT

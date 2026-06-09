@@ -75,6 +75,33 @@ export const FeaturesConfigSchema = z.object({
   enablePriorityLevels: z.boolean().default(true),
 });
 
+// Calculator field configuration
+export const CalculatorFieldSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  type: z.enum(['number', 'select', 'text']),
+  unit: z.string().optional(),
+  options: z.array(z.object({
+    value: z.string(),
+    label: z.string(),
+  })).optional(),
+  required: z.boolean().default(true),
+  min: z.number().optional(),
+  max: z.number().optional(),
+  defaultValue: z.union([z.string(), z.number()]).optional(),
+});
+
+// Calculator configuration
+export const CalculatorSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  description: z.string(),
+  icon: z.string().optional(),
+  fields: z.array(CalculatorFieldSchema),
+  outputUnit: z.string().optional(),
+  outputLabel: z.string(),
+});
+
 export const AppConfigSchema = z.object({
   company: CompanyInfoSchema,
   pricing: PricingConfigSchema,
@@ -82,6 +109,7 @@ export const AppConfigSchema = z.object({
   quoteBuilder: QuoteBuilderConfigSchema,
   features: FeaturesConfigSchema,
   termsAndConditions: z.string().default(''),
+  calculators: z.array(CalculatorSchema).optional().default([]),
 });
 
 export type ValidatedAppConfig = z.infer<typeof AppConfigSchema>;

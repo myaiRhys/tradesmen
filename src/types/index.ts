@@ -147,6 +147,46 @@ export interface FeaturesConfig {
   enablePriorityLevels: boolean;
 }
 
+export interface CalculatorFieldOption {
+  value: string;
+  label: string;
+}
+
+export interface CalculatorField {
+  id: string;
+  label: string;
+  type: 'number' | 'select' | 'text';
+  unit?: string;
+  options?: CalculatorFieldOption[];
+  required?: boolean;
+  min?: number;
+  max?: number;
+  defaultValue?: string | number;
+}
+
+export interface Calculator {
+  id: string;
+  label: string;
+  description: string;
+  icon?: string;
+  fields: CalculatorField[];
+  outputUnit?: string;
+  outputLabel: string;
+}
+
+export interface CalculatorResult {
+  value: number | string;
+  unit: string;
+  label: string;
+  recommendation: string;
+  lineItem?: {
+    description: string;
+    quantity: number;
+    unit: string;
+    unitPrice: number;
+  };
+}
+
 export interface AppConfig {
   company: CompanyInfo;
   pricing: PricingConfig;
@@ -154,6 +194,7 @@ export interface AppConfig {
   quoteBuilder: QuoteBuilderConfig;
   features: FeaturesConfig;
   termsAndConditions: string;
+  calculators?: Calculator[];
 }
 
 export interface AppState {

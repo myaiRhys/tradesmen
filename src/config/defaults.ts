@@ -86,6 +86,7 @@ export const defaultConfig: AppConfig = {
     enableNotes: true,
     enablePriorityLevels: true,
   },
+  calculators: [],
   termsAndConditions: `1. A 50% deposit is required before work commences.
 2. Final payment is due upon completion of work.
 3. This quote is valid for 14 days from the date of issue.

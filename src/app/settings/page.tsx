@@ -1,15 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useConfig, useFeedback } from '@/context';
 import { Button, Card, Input, Textarea, Select } from '@/components/ui';
 import { tradePresets, type TradePresetKey } from '@/config/trades';
+import { getSelectedTrade, clearSelectedTrade } from '@/components/onboarding';
+
+const SELECTED_TRADE_KEY = 'tradesmen_selected_trade';
 
 export default function SettingsPage() {
   const { config, updateConfig, resetConfig, loadPreset, isLoaded } = useConfig();
   const { showToast, confirm } = useFeedback();
 
   const [activeTab, setActiveTab] = useState<'company' | 'pricing' | 'presets'>('company');
+  const [currentTrade, setCurrentTrade] = useState<TradePresetKey | null>(null);
+
+  // Load current trade selection
+  useEffect(() => {
+    const selectedTrade = getSelectedTrade();
+    setCurrentTrade(selectedTrade);
+  }, []);
 
   // Company form state
   const [companyForm, setCompanyForm] = useState({
@@ -77,15 +87,22 @@ export default function SettingsPage() {
 
   const handleLoadPreset = async (presetKey: TradePresetKey) => {
     const confirmed = await confirm({
-      title: 'Load Preset',
+      title: 'Switch Trade',
       message: `This will replace your current configuration with the ${presetKey} preset. Your company info will be reset. Continue?`,
-      confirmText: 'Load Preset',
+      confirmText: 'Switch Trade',
       variant: 'warning',
     });
 
     if (confirmed) {
       const preset = tradePresets[presetKey];
       loadPreset(preset);
+
+      // Update localStorage with selected trade
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(SELECTED_TRADE_KEY, presetKey);
+      }
+      setCurrentTrade(presetKey);
+
       // Update local form state
       setCompanyForm({
         name: preset.company.name,
@@ -109,7 +126,7 @@ export default function SettingsPage() {
         invoiceDueDays: preset.pricing.invoiceDueDays,
       });
       setTermsForm(preset.termsAndConditions);
-      showToast(`Loaded ${presetKey} preset`, 'success');
+      showToast(`Switched to ${presetKey} preset`, 'success');
     }
   };
 
@@ -318,28 +335,54 @@ export default function SettingsPage() {
         {/* Presets Tab */}
         {activeTab === 'presets' && (
           <div className="space-y-6">
+            {/* Current Trade Display */}
+            {currentTrade && (
+              <Card className="bg-zinc-50">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-zinc-500 uppercase tracking-wide">Current Trade</p>
+                    <p className="text-lg font-semibold text-zinc-900 capitalize">{currentTrade}</p>
+                  </div>
+                  <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700">
+                    Active
+                  </span>
+                </div>
+              </Card>
+            )}
+
             <Card>
-              <h2 className="font-semibold text-zinc-900 mb-2">Trade Presets</h2>
+              <h2 className="font-semibold text-zinc-900 mb-2">Switch Trade</h2>
               <p className="text-sm text-zinc-500 mb-4">
-                Load a preset configuration tailored for your trade. This will update
-                your workflow, line item categories, and terms.
+                Switch to a different trade preset. This will update your workflow,
+                line item categories, calculators, and terms.
               </p>
 
               <div className="grid gap-4 md:grid-cols-3">
                 {(Object.keys(tradePresets) as TradePresetKey[]).map((key) => {
                   const preset = tradePresets[key];
+                  const isActive = currentTrade === key;
                   return (
                     <Card
                       key={key}
-                      hover
-                      onClick={() => handleLoadPreset(key)}
-                      className="cursor-pointer"
+                      hover={!isActive}
+                      onClick={isActive ? undefined : () => handleLoadPreset(key)}
+                      className={`${isActive ? 'ring-2 ring-zinc-900 bg-zinc-50' : 'cursor-pointer'}`}
                     >
-                      <h3 className="font-medium text-zinc-900 capitalize mb-1">{key}</h3>
+                      <div className="flex items-start justify-between mb-1">
+                        <h3 className="font-medium text-zinc-900 capitalize">{key}</h3>
+                        {isActive && (
+                          <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                        )}
+                      </div>
                       <p className="text-xs text-zinc-500 mb-2">{preset.company.name}</p>
                       <p className="text-xs text-zinc-400">
                         {preset.workflow.statuses.length} statuses •{' '}
                         {preset.quoteBuilder.categories.length} categories
+                        {preset.calculators && preset.calculators.length > 0 && (
+                          <> • {preset.calculators.length} calculators</>
+                        )}
                       </p>
                     </Card>
                   );
